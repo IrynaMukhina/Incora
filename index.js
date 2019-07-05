@@ -11,7 +11,7 @@ class User {
 			this.name = name;
 			this.money = money;
 		} else {
-			return new Error(`Please check method argument`)
+			console.error(`Please check method argument`)
 		}
 	}
 	play(casinoName, moneyToPlay) {
@@ -23,14 +23,14 @@ class User {
 					if (selectedCasino._casino._machineArray[randomMachineIndex]._totalSum >= moneyToPlay * 3) {
 						this.money += selectedCasino._casino._machineArray[randomMachineIndex].playGame(moneyToPlay);
 					} else {
-						return new Error(`This casino machine is almost empty. Please try again`);
+						console.error(`This casino machine is almost empty. Please try again`);
 					}
 				} else {
-					return new Error(`You haven't enough money to play. Your sum is ${this.money}`);
+					console.error(`You haven't enough money to play. Your sum is ${this.money}`);
 				}
 			}
 		} else {
-			return new Error(`Please enter positive number.`)
+			console.error(`Please enter positive number.`)
 		}
 	}
 }
@@ -41,13 +41,13 @@ class SuperAdmin extends User {
 	}
 	createCasino(casinoName) {
 		if (casinoArr.some(el => el._casino._name === casinoName)) {
-			return new Error(`Casino ${casinoName} is already exist`);
+			console.error(`Casino ${casinoName} is already exist`);
 		} else {
 			casinoArr.push({ 
 				_adminName: this.name,
 				_casino: new Casino(casinoName) 
 			});
-			return `Casino created seccessfully`
+			console.log(`Casino created seccessfully`);
 		}
 	}
 	createMachine(casinoName, startSum) {
@@ -59,17 +59,17 @@ class SuperAdmin extends User {
 				const machine = new GameMachine(startSum);
 				selectedCasino._casino._machineArray.push(machine);
 
-				return `Machine with start sum ${startSum} successfully created in casino "${casinoName}"`;
+				console.log(`Machine with start sum ${startSum} successfully created in casino "${casinoName}"`);
 			}
 		} else {
 			if (selectedCasino === undefined) {
-			 return new Error(`You shoul create casino firstly`);
+			 console.error(`You shoul create casino firstly`);
 			} else if ( this.money - startSum < 0) {
-				return new Error(`You haven't enough money for machine criation. You sum is ${this.money}, needed sum is ${startSum}`);
+				console.error(`You haven't enough money for machine criation. You sum is ${this.money}, needed sum is ${startSum}`);
 			} else if (adminName !== this.name) {
-				return new Error(`This casino has another admin. You couldn't make any changes`);
+				console.error(`This casino has another admin. You couldn't make any changes`);
 			} else {
-				return new Error(`Casino with name ${casinoName} doesn't exist`);
+				console.error(`Casino with name ${casinoName} doesn't exist`);
 			}
 		}
 	}
@@ -93,15 +93,15 @@ class SuperAdmin extends User {
 				}
 				this.money += neededSum;
 				
-				return `You successfully take ${sum} from "${casinoName}"`;
+				console.log(`You successfully take ${sum} from "${casinoName}"`);
 			} else {
-				return new Error(`Amount is bigger then total sum from all casino machines`);
+				console.error(`Amount is bigger then total sum from all casino machines`);
 			}
 		}
 		if (Object.keys(selectedCasino._casino).length === 0) {
-			return `Casino with name ${casinoName} doesn't exist`;
+			console.error(`Casino with name ${casinoName} doesn't exist`);
 		} else if (adminName !== this.name) {
-			return new Error(`This casino has another admin. You couldn't make any changes`);
+			console.error(`This casino has another admin. You couldn't make any changes`);
 		}
 	}
 	putMoneyToMachine(casinoName, number, sum) {
@@ -111,15 +111,15 @@ class SuperAdmin extends User {
 			if (number > 0 && number <= selectedCasino._casino.getMachineCount()) {
 				selectedCasino._casino._machineArray[number - 1]._totalSum += sum;
 				
-				return `${sum} is added to the Machine ${number} in casino "${casinoName}"`;
+				console.log(`${sum} is added to the Machine ${number} in casino "${casinoName}"`);
 			} else {
-				return new Error(`Machine with number ${number} doesn't exist`);
+				console.error(`Machine with number ${number} doesn't exist`);
 			}
 		}
 		if (Object.keys(selectedCasino._casino).length === 0) {
-			return new Error(`Casino with name ${casinoName} doesn't exist`);
+			console.error(`Casino with name ${casinoName} doesn't exist`);
 		} else if (adminName !== this.name) {
-			return new Error(`This casino has another admin. You couldn't make any changes`);
+			console.error(`This casino has another admin. You couldn't make any changes`);
 		}
 	}
 	deleteMachine(casinoName, number) {
@@ -131,15 +131,15 @@ class SuperAdmin extends User {
 				selectedCasino._casino._machineArray.splice((number - 1), 1);
 				selectedCasino._casino._machineArray.forEach(el => el.putMoney(moneyFromMachine / selectedCasino._casino.getMachineCount()));
 
-				return `Machine with number ${number} successfully deleted. Amount is shared between rest of machines`;
+				console.log(`Machine with number ${number} successfully deleted. Amount is shared between rest of machines`);
 			} else {
-				return new Error(`Machine with number ${number} doesn't exist`);
+				console.error(`Machine with number ${number} doesn't exist`);
 			}
 		}
 		if (Object.keys(selectedCasino._casino).length === 0) {
-			return new Error(`Casino with name ${casinoName} doesn't exist`);
+			console.error(`Casino with name ${casinoName} doesn't exist`);
 		} else if (adminName !== this.name) {
-			return new Error(`This casino has another admin. You couldn't make any changes`);
+			console.error(`This casino has another admin. You couldn't make any changes`);
 		}
 	}
 }
@@ -162,7 +162,7 @@ class GameMachine {
 		if (isPositiveNumber(startSum)) {
 			this._totalSum = startSum;
 		} else {
-			return new Error(`Please check method argument`)
+			console.error(`Please check method argument`)
 		}
 	}
 	get getMoney() {
