@@ -200,7 +200,7 @@ class GameMachine {
 	}
 }
 
-//comands for checking
+//commands for checking
 
 const adminUser1 = new SuperAdmin('Bob', 1000000); // create instance of SuperAdmin class
 adminUser1.createMachine('BobCasino', 30000); // will show error that casino should be created before machine
