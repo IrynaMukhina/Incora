@@ -11,7 +11,7 @@ class User {
 			this.name = name;
 			this.money = money;
 		} else {
-			console.error(`Please check method argument`)
+			console.error(`Please check method argument`);
 		}
 	}
 	play(casinoName, moneyToPlay) {
@@ -80,9 +80,9 @@ class SuperAdmin extends User {
 			if (selectedCasino._casino.getMoney() >= sum) {
 				let neededSum = 0;
 				selectedCasino._casino._machineArray.sort((a, b) => b._totalSum - a._totalSum);
-				for(let i = 0; i < selectedCasino._casino.getMachineCount(); i++ ){
+				for (let i = 0; i < selectedCasino._casino.getMachineCount(); i++ ){
 					if (neededSum !== sum) {
-						if(sum - neededSum > selectedCasino._casino._machineArray[i]._totalSum) {
+						if (sum - neededSum > selectedCasino._casino._machineArray[i]._totalSum) {
 							neededSum += selectedCasino._casino._machineArray[i]._totalSum;
 							selectedCasino._casino._machineArray[i]._totalSum = 0;
 						} else {
