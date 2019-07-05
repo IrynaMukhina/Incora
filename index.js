@@ -47,7 +47,7 @@ class SuperAdmin extends User {
 				_adminName: this.name,
 				_casino: new Casino(casinoName) 
 			});
-			console.log(`Casino created seccessfully`);
+			console.log(`Casino has created seccessfully`);
 		}
 	}
 	createMachine(casinoName, startSum) {
@@ -63,7 +63,7 @@ class SuperAdmin extends User {
 			}
 		} else {
 			if (selectedCasino === undefined) {
-			 console.error(`You shoul create casino firstly`);
+			 console.error(`You should create casino firstly`);
 			} else if ( this.money - startSum < 0) {
 				console.error(`You haven't enough money for machine criation. You sum is ${this.money}, needed sum is ${startSum}`);
 			} else if (adminName !== this.name) {
